@@ -3,9 +3,8 @@ import PySimpleGUI as sg
 def replace_func(string, old_char, new_char):
     return string.replace(old_char, new_char)
     
-def insert_char_at_end(string, char):
-    string = string.replace('\n', '')
-    return string+char;
+def insert_char_at_end(user_input, char):
+    return user_input.replace('\n', f'{char}\n')
 
 def add_char_at_beginning(string, char):
     return char+string;
@@ -55,6 +54,7 @@ class TelaPrincipal:
             elif insert_at_end:
                 if at_end == '':
                     print('Erro! Digite um caractere para inserir ao fim do seu texto!')
+                    continue
                 print(insert_char_at_end(user_input, at_end))
             else:
                 print('Erro! Tente novamente')
