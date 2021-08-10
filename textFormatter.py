@@ -6,8 +6,10 @@ def replace_func(string, old_char, new_char):
 def insert_char_at_end(user_input, char):
     return user_input.replace('\n', f'{char}\n')
 
-def add_char_at_beginning(string, char):
-    return char+string;
+def insert_char_at_beginning(user_input, char):
+    user_input = char+user_input
+    return user_input.replace('\n', f'\n{char}')[:-1]
+
 
 def encrypt():
     pass
@@ -25,7 +27,8 @@ class TelaPrincipal:
             [sg.Text('Escolha uma opção abaixo')],
             [sg.Radio('Substituir', 'options', key='replace')],
             [sg.Text('Antigo termo'), sg.Input(size=(5,0), key='old_char'), sg.Text('Novo termo'), sg.Input(size=(5,0), key='new_char')],
-            [sg.Radio('Inserir no fim', 'options', key='insert_at_end'), sg.Input(size=(5,0), key='at_end')],
+            [sg.Text('Inserir caractere')],
+            [sg.Check('Ao fim', key='insert_at_end'), sg.Check('Ao começo', key='insert_at_beginning'), sg.Input(size=(5,0), key='inserted_char')],
             [sg.Button('Processar')],
             [sg.Text('Saída')],
             [sg.Output(size=(50,6))]
@@ -45,17 +48,31 @@ class TelaPrincipal:
             old_char = self.values['old_char']
             new_char = self.values['new_char']
             insert_at_end = self.values['insert_at_end']
-            at_end = self.values['at_end']
+            insert_at_beginning = self.values['insert_at_beginning']
+            inserted_char = self.values['inserted_char']
 
 
             if replace:
                 output = replace_func(user_input, old_char, new_char)
                 print(output)
+            elif insert_at_end and insert_at_beginning:
+                if inserted_char == '':
+                    print('Erro! Digite um caractere para inserir no começo e no fim do seu texto!')
+                    continue
+                aux = insert_char_at_end(user_input, inserted_char)
+                print(insert_char_at_beginning(aux, inserted_char))
             elif insert_at_end:
-                if at_end == '':
+                if inserted_char == '':
                     print('Erro! Digite um caractere para inserir ao fim do seu texto!')
                     continue
-                print(insert_char_at_end(user_input, at_end))
+                print(insert_char_at_end(user_input, inserted_char))
+            elif insert_at_beginning:
+                if inserted_char == '':
+                    print('Erro! Digite um caractere para inserir ao começo do seu texto!')
+                    continue
+                print(insert_char_at_beginning(user_input, inserted_char))
+            
+
             else:
                 print('Erro! Tente novamente')
 
