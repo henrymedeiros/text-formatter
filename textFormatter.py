@@ -1,9 +1,10 @@
 import PySimpleGUI as sg
 
-def replace(string, old_char, new_char):
+def replace_func(string, old_char, new_char):
     return string.replace(old_char, new_char)
     
-def add_char_at_end(string, char):
+def insert_char_at_end(string, char):
+    string = string.replace('\n', '')
     return string+char;
 
 def add_char_at_beginning(string, char):
@@ -25,23 +26,41 @@ class TelaPrincipal:
             [sg.Text('Escolha uma opção abaixo')],
             [sg.Radio('Substituir', 'options', key='replace')],
             [sg.Text('Antigo termo'), sg.Input(size=(5,0), key='old_char'), sg.Text('Novo termo'), sg.Input(size=(5,0), key='new_char')],
-            [sg.Radio('Inserir no fim', 'options', key='insert_at_end')],
-            [sg.Button('Processar')]
+            [sg.Radio('Inserir no fim', 'options', key='insert_at_end'), sg.Input(size=(5,0), key='at_end')],
+            [sg.Button('Processar')],
+            [sg.Text('Saída')],
+            [sg.Output(size=(50,6))]
             
             
         ]
         #Janela
         self.janela = sg.Window('Super Text Formatter').layout(layout)
-        self.button, self.values = self.janela.Read()
+      
         #Extrair
         
     def Iniciar(self):
-        user_input = self.values['input']
-        replace = self.values['replace']
-        old_char = self.values['old_char']
-        new_char = self.values['new_char']
-        insert_at_end = self.values['insert_at_end']
-        print(self.values)
+        while True:                             # The Event Loop
+            self.button, self.values = self.janela.Read()
+            user_input = self.values['input']
+            replace = self.values['replace']
+            old_char = self.values['old_char']
+            new_char = self.values['new_char']
+            insert_at_end = self.values['insert_at_end']
+            at_end = self.values['at_end']
+
+
+            if replace:
+                output = replace_func(user_input, old_char, new_char)
+                print(output)
+            elif insert_at_end:
+                if at_end == '':
+                    print('Erro! Digite um caractere para inserir ao fim do seu texto!')
+                print(insert_char_at_end(user_input, at_end))
+            else:
+                print('Erro! Tente novamente')
+
+        
+
 
         
 tela = TelaPrincipal()
