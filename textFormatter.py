@@ -11,17 +11,9 @@ def insert_char_at_beginning(user_input, char):
     return user_input.replace('\n', f'\n{char}')[:-1]
 
 def alphabetize(user_input):
-    words = []
-    temp_string = []
-    for char in user_input:
-        if(char!="\n"):
-            temp_string.append(char)
-            continue
-        words.append(''.join(temp_string))
-        temp_string = []
-    return '\n'.join(sorted(words))
-
-            
+    if ',' in user_input:
+        return ','.join(sorted(user_input[:-1].split(',')))
+    return '\n'.join(sorted(user_input[:-1].split('\n')))
 
 
 def encrypt():

@@ -1,15 +1,9 @@
 
 def alphabetize(user_input):
-    words = []
-    temp_string = []
-    for char in user_input:
-        if(char!="\n"):
-            temp_string.append(char)
-            continue
-        words.append(''.join(temp_string))
-        temp_string = []
-    return '\n'.join(sorted(words))
+    if ',' in user_input:
+        return ','.join(sorted(user_input.split(',')))
+    return '\n'.join(sorted(user_input.split('\n')))
     
 
-teste = "xota\nsexo\nmesa\n"
+teste = "xota,sexo,tenso"
 print(alphabetize(teste))
