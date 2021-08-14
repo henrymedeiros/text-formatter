@@ -1,0 +1,1 @@
+            [sg.Radio('Minúscula', 'options', key='lowercase'),sg.Radio('Maiúscula', 'options', key='uppercase'), sg.Radio('Minúscula', 'options', key=
